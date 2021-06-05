@@ -35,8 +35,8 @@ namespace AppExpenseTracker
 
               // Cosmos DB configuration options
               options => options.UseCosmos(
-                  "",
-                  "",
+                  "test",
+                  "test123",
                   databaseName: "Tasks"
               ),
 
