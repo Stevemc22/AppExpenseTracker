@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,24 +35,40 @@ namespace AppExpenseTracker
 
               // Cosmos DB configuration options
               options => options.UseCosmos(
-                  ConfigurationManager.AppSettings["ClavePrincipal"],
                   ConfigurationManager.AppSettings["URI"],
+                  ConfigurationManager.AppSettings["ClavePrincipal"],
                   databaseName: "Tasks"
               ),
 
               // If true, AddDefaultTokenProviders() method will be called on the IdentityBuilder instance
               addDefaultTokenProviders: false
             );
-            services.AddControllersWithViews();
-            services.AddRazorPages();
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest)
+           .AddRazorPagesOptions(options =>
+           {
+               options.Conventions.AuthorizeAreaFolder("Identity", "/Account/Manage");
+               options.Conventions.AuthorizeAreaPage("Identity", "/Account/Logout");
+           });
+
             services.ConfigureApplicationCookie(options =>
             {
-                // Cookie settings
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
-                options.LoginPath = "/Identity/Account/Login";
-                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
-                options.SlidingExpiration = true;
+                options.LoginPath = $"/Identity/Account/Login";
+                options.LogoutPath = $"/Identity/Account/Logout";
+                options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
             });
+
+            services.AddControllersWithViews();
+            services.AddRazorPages();
+            //services.ConfigureApplicationCookie(options =>
+            //{
+            //    // Cookie settings
+            //    options.Cookie.HttpOnly = true;
+            //    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+            //    options.LoginPath = "/Identity/Account/Login";
+            //    options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+            //    options.SlidingExpiration = true;
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
