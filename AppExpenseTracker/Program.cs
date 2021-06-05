@@ -22,7 +22,7 @@ namespace AppExpenseTracker
                 webBuilder.ConfigureAppConfiguration((hostingContext, config) =>
                 {
                     var settings = config.Build();
-                    config.AddAzureAppConfiguration(settings["ConnectionStrings:AppConfig"]);
+                    config.AddAzureAppConfiguration(Environment.GetEnvironmentVariable("ConnectionString"));
                 }).UseStartup<Startup>());
     }
 }
