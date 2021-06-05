@@ -35,8 +35,8 @@ namespace AppExpenseTracker
 
               // Cosmos DB configuration options
               options => options.UseCosmos(
-                  ConfigurationManager.AppSettings["URI"],
-                  ConfigurationManager.AppSettings["ClavePrincipal"],
+                  "",
+                  "",
                   databaseName: "Tasks"
               ),
 
@@ -44,12 +44,15 @@ namespace AppExpenseTracker
               addDefaultTokenProviders: false
             );
 
+            services.AddControllersWithViews();
+            services.AddRazorPages();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest)
-           .AddRazorPagesOptions(options =>
-           {
+            .AddRazorPagesOptions(options =>
+            {
                options.Conventions.AuthorizeAreaFolder("Identity", "/Account/Manage");
                options.Conventions.AuthorizeAreaPage("Identity", "/Account/Logout");
-           });
+            });
 
             services.ConfigureApplicationCookie(options =>
             {
@@ -58,8 +61,6 @@ namespace AppExpenseTracker
                 options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
             });
 
-            services.AddControllersWithViews();
-            services.AddRazorPages();
             //services.ConfigureApplicationCookie(options =>
             //{
             //    // Cookie settings
