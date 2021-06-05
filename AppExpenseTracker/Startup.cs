@@ -35,8 +35,8 @@ namespace AppExpenseTracker
 
               // Cosmos DB configuration options
               options => options.UseCosmos(
-                  "test",
-                  "test123",
+                  Configuration["Expensetrackerapp:Settings:URI"],
+                  Configuration["Expensetrackerapp:Settings:Key"],
                   databaseName: "Tasks"
               ),
 

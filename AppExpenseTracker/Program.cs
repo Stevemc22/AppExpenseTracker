@@ -19,8 +19,10 @@ namespace AppExpenseTracker
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
+                webBuilder.ConfigureAppConfiguration((hostingContext, config) =>
                 {
-                    webBuilder.UseStartup<Startup>();
-                });
+                    var settings = config.Build();
+                    config.AddAzureAppConfiguration(settings["ConnectionStrings:AppConfig"]);
+                }).UseStartup<Startup>());
     }
 }
