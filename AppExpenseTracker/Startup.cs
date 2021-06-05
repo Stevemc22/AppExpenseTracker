@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using PieroDeTomi.EntityFrameworkCore.Identity.Cosmos.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -33,8 +34,8 @@ namespace AppExpenseTracker
 
               // Cosmos DB configuration options
               options => options.UseCosmos(
-                  "",
-                  "",
+                  ConfigurationManager.AppSettings["ClavePrincipal"],
+                  ConfigurationManager.AppSettings["URI"],
                   databaseName: "Tasks"
               ),
 
