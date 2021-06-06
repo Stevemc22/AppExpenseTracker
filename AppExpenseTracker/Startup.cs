@@ -35,8 +35,8 @@ namespace AppExpenseTracker
 
               // Cosmos DB configuration options
               options => options.UseCosmos(
-                  Configuration["Expensetrackerapp:Settings:URI"],
-                  Configuration["Expensetrackerapp:Settings:Key"],
+                  Environment.GetEnvironmentVariable("CosmosDb:URI"),
+                  Environment.GetEnvironmentVariable("CosmosDb:Key"),
                   databaseName: "Tasks"
               ),
 
@@ -60,16 +60,6 @@ namespace AppExpenseTracker
                 options.LogoutPath = $"/Identity/Account/Logout";
                 options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
             });
-
-            //services.ConfigureApplicationCookie(options =>
-            //{
-            //    // Cookie settings
-            //    options.Cookie.HttpOnly = true;
-            //    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
-            //    options.LoginPath = "/Identity/Account/Login";
-            //    options.AccessDeniedPath = "/Identity/Account/AccessDenied";
-            //    options.SlidingExpiration = true;
-            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
