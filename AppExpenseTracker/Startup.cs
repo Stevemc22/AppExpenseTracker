@@ -35,8 +35,8 @@ namespace AppExpenseTracker
 
               // Cosmos DB configuration options
               options => options.UseCosmos(
-                  Environment.GetEnvironmentVariable("CosmosDb:URI"),
-                  Environment.GetEnvironmentVariable("CosmosDb:Key"),
+                  "https://cosmosdb-componentesapp.documents.azure.com:443/",
+                  "K6NQobIRcfuYaqqk2N6QQ9vyqaBEaIxPg1qw5xYLbvbboebEniQyyWvwetxhqEoqqGZF3cu14dyAvse2ZepxRQ==",
                   databaseName: "Tasks"
               ),
 
